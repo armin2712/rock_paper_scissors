@@ -3,8 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="script.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <title>Rock paper scissor</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <div class="image-container">
+        <div class="player">
+          <p>Player</p>
+        </div>
+        <div class="img"><img class="img-player" src="rock.png" alt="" /></div>
+      </div>
+      <div class="result">
+        <p class="player-point">0</p>
+        <p class="semi">:</p>
+        <p class="ai-point">0</p>
+      </div>
+      <div class="image-container">
+        <div class="player">
+          <p>Computer</p>
+        </div>
+        <div class="img">
+          <img class="img-ai" src="rock.png" alt="" />
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button class="btn rock">Rock</button>
+        <button class="btn paper">Paper</button>
+        <button class="btn scissor">Scissor</button>
+      </div>
+    </div>
+    <div class="conclusion">
+      <p class="conc-text">Waiting...</p>
+    </div>
+
+    <div class="winner">
+      <h1 class="winner-text">Welcome!</h1>
+      <button class="start">Start New Game</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>

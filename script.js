@@ -1,67 +1,124 @@
 // Returns random choice from rock,paper, scissors
+const start = document.querySelector(".start");
+const imgPlayer = document.querySelector(".img-player");
+const btn = document.querySelectorAll(".btn");
+const imgAi = document.querySelector(".img-ai");
+const playerPoints = document.querySelector(".player-point");
+const aiPoint = document.querySelector(".ai-point");
+const conclusion = document.querySelector(".conc-text");
+const winner = document.querySelector(".winner-text");
+const curtain = document.querySelector(".winner");
+
+let userChoice = "";
+
+// Ask the User for input, it needs to be one of the random choices
+
 const choices = ["Rock", "Paper", "Scissor"];
+let result = [0, 0];
 
 function getComputerChoice() {
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
-// Ask the User for input, it needs to be one of the random choices
-function getUserChoice() {
-  let choiceInput = prompt("Rock, paper or scissor?");
-  let choice =
-    choiceInput[0].toUpperCase() + choiceInput.slice(1).toLocaleLowerCase();
-  if (choices.indexOf(choice) >= 0) {
-    return choice;
-  } else {
-    getUserChoice();
+function check() {
+  if (result[0] + result[1] === 5) {
+    setTimeout(function () {
+      curtain.classList.toggle("active");
+
+      if (result[0] > result[1]) {
+        winner.innerHTML = "You lose! The Ai wins the game!";
+      } else if (result[1] > result[0]) {
+        winner.innerHTML = "You win the GAME!";
+      }
+    }, 800);
   }
 }
-
 // Compare user input and random from comp, returns 1 for player and 0 for comp
 function round() {
-  let playerSelection = getUserChoice();
+  let playerSelection = userChoice;
+  console.log(playerSelection);
   let computerSelection = getComputerChoice();
+  imgAi.src = computerSelection.toLowerCase() + ".png";
 
   if (playerSelection === computerSelection) {
-    console.log("It is a TIE, the Round will be played again!");
-    round();
+    conclusion.innerHTML = "It is a TIE, the Round will be played again!";
   } else if (playerSelection === "Rock" && computerSelection === "Scissor") {
-    console.log("You win! Rock beats Scissor");
-    return 1;
+    conclusion.innerHTML = "You win! Rock beats Scissor";
+    result[1] += 1;
+    playerPoints.innerHTML = result[1];
+    playerPoints.classList.toggle("shake");
+    setTimeout(function () {
+      playerPoints.classList.toggle("shake");
+    }, 500);
+    check();
   } else if (playerSelection === "Rock" && computerSelection === "Paper") {
-    console.log("You lose! Paper beats Rock!");
-    return 0;
+    conclusion.innerHTML = "You lose! Paper beats Rock!";
+    result[0] += 1;
+    aiPoint.innerHTML = result[0];
+    aiPoint.classList.toggle("shake");
+    setTimeout(function () {
+      aiPoint.classList.toggle("shake");
+    }, 500);
+    check();
   } else if (playerSelection === "Paper" && computerSelection === "Rock") {
-    console.log("You win! Paper beats Rock");
-    return 1;
+    conclusion.innerHTML = "You win! Paper beats Rock";
+    result[1] += 1;
+    playerPoints.innerHTML = result[1];
+    playerPoints.classList.toggle("shake");
+    setTimeout(function () {
+      playerPoints.classList.toggle("shake");
+    }, 500);
+    check();
   } else if (playerSelection === "Paper" && computerSelection === "Scissor") {
-    console.log("You lose! Scissor beats Paper!");
-    return 0;
+    conclusion.innerHTML = "You lose! Scissor beats Paper!";
+    result[0] += 1;
+    aiPoint.innerHTML = result[0];
+    aiPoint.classList.toggle("shake");
+    setTimeout(function () {
+      aiPoint.classList.toggle("shake");
+    }, 500);
+    check();
   } else if (playerSelection === "Scissor" && computerSelection === "Paper") {
-    console.log("You win! Scissor beats Paper!");
-    return 1;
+    conclusion.innerHTML = "You win! Scissor beats Paper!";
+    result[1] += 1;
+    playerPoints.innerHTML = result[1];
+    playerPoints.classList.toggle("shake");
+    setTimeout(function () {
+      playerPoints.classList.toggle("shake");
+    }, 500);
+    check();
   } else {
-    console.log("You lose! Rock beats Scissor!");
-    return 0;
+    conclusion.innerHTML = "You lose! Rock beats Scissor!";
+    result[0] += 1;
+    aiPoint.innerHTML = result[0];
+    aiPoint.classList.toggle("shake");
+    setTimeout(function () {
+      aiPoint.classList.toggle("shake");
+    }, 500);
+    check();
   }
 }
 
-// Make a game of 5 rounds and display winner
-function game() {
-  //Player points are stored in result[1] and comp points in result[0]
-  let result = [0, 0];
+//Player points are stored in result[1] and comp points in result[0]
 
-  for (i = 0; i < 5; i++) {
-    result[parseInt(round())] += 1;
-  }
+btn.forEach((element) => {
+  element.addEventListener("click", () => {
+    userChoice = "";
+    userChoice += element.innerHTML;
+    imgPlayer.src = userChoice + ".png";
 
-  console.log("END RESULT");
+    round();
+  });
+});
 
-  if (result[0] > result[1]) {
-    console.log("You lose! The Ai wins the game!");
-  } else if (result[1] > result[0]) {
-    console.log("You win the GAME!");
-  }
-}
+start.addEventListener("click", () => {
+  conclusion.innerHTML = "";
+  imgPlayer.src = "rock.png";
+  imgAi.src = "rock.png";
+  curtain.classList.toggle("active");
 
-game();
+  result[0] = 0;
+  result[1] = 0;
+  playerPoints.innerHTML = result[1];
+  aiPoint.innerHTML = result[0];
+});
